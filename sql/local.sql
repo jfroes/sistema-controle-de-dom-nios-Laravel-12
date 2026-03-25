@@ -128,7 +128,7 @@ CREATE TABLE `users` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -137,9 +137,10 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (2,'José','admin@email.com','$2y$12$XPwJiAoUiiK4KyCviiA/r.xaBySESH/Cy.RN8DlvxDenTAxk.t6yS','admin',NULL,0,'2026-03-23 14:10:08','2026-03-22 21:49:01','2026-03-25 01:25:39',NULL,'ativo','2026-03-23 00:49:01','2026-03-25 04:25:39',NULL);
+INSERT INTO `users` VALUES (2,'José','admin@email.com','$2y$12$XPwJiAoUiiK4KyCviiA/r.xaBySESH/Cy.RN8DlvxDenTAxk.t6yS','admin',NULL,0,'2026-03-23 14:10:08','2026-03-22 21:49:01','2026-03-25 18:28:35',NULL,'ativo','2026-03-23 00:49:01','2026-03-25 21:28:35',NULL);
 INSERT INTO `users` VALUES (5,'Nelson','mandela@email.com','$2y$12$qpebyojmyNYDSSHBYekh4eHvGunityHvGvuZMzlXYt4XEurnGwHdq','admin','yxkdTH9zAHEgBk67HkrlpyKjCdNQegOeqcmpuWn2qxcfPF62dSMkSJhylHtATeAq',0,'2026-03-23 19:56:21',NULL,'2026-03-23 19:56:21',NULL,'ativo','2026-03-23 17:06:51','2026-03-25 04:50:30','2026-03-25 04:50:30');
-INSERT INTO `users` VALUES (7,'Raiane Vecanandre de Raio Lazer','raiane@email.com','$2y$12$06wytdFqB1qYgv7oWqgE8O.wujKF9gxYDJ1W9ZNsN1pgtrmI7.raa','user','ZNSRDvX43f3nuCyAcQVZdgggSiM4dYF57KvJABCv3A9S3HFT6wQ8wBBQPudNyZKq',0,'2026-03-24 22:22:40',NULL,'2026-03-25 00:58:53',NULL,'inativo','2026-03-23 23:42:47','2026-03-25 04:40:47',NULL);
+INSERT INTO `users` VALUES (7,'Raiane Vecanandre de Raio Lazer','raiane@email.com','$2y$12$ut0cnyyCIqJADjLp/9SyOOewhHKSrxuHeUrw3s1pMUiKuBt6WWs/q','user',NULL,0,'2026-03-25 14:46:38',NULL,'2026-03-25 14:46:38',NULL,'ativo','2026-03-23 23:42:47','2026-03-25 17:46:38',NULL);
+INSERT INTO `users` VALUES (9,'User 1','user1@email.com','$2y$12$TYpRx0/WotRTC0CELFwKpuGOBNlJKDHKMCPMzuCkAOo8Vi3OugfNa','user',NULL,0,'2026-03-25 18:55:50',NULL,'2026-03-25 18:55:50',NULL,'ativo','2026-03-25 21:28:58','2026-03-25 21:55:50',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -152,4 +153,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-24 22:50:42
+-- Dump completed on 2026-03-25 15:56:45

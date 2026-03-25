@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Enums\UserRoleEnum;
 use App\Enums\UserStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Mail\ResetPassword;
@@ -11,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -34,13 +34,32 @@ class AuthController extends Controller
             'password.required' => 'O campo senha é obrigatório.',
         ]);
 
-        $credentials = [
-          'email' => $request->email,
-          'password' => $request->password,
-          'status' => UserStatusEnum::ACTIVE->value,
-        ];
+        $credentials = $request->only('email', 'password');
 
-        if(Auth::attempt($credentials)){
+        $user = User::where('email', $request->email)->first();
+
+        if(!$user){
+            return back()->with('error', 'Login inválido.');
+        }
+
+        if($user->status == UserStatusEnum::INACTIVE->value && $user->token){
+            if (!Hash::check($request->password, $user->password)) {
+                return back()->with('error', 'Login inválido.');
+            }
+
+            $user->status = UserStatusEnum::ACTIVE->value;
+            $user->token = null;
+            $user->must_change_password = true;
+            $user->last_login_at = now();
+            $user->save();
+
+            Auth::login($user);
+            $request->session()->regenerate();
+
+            return redirect()->route('first-login');
+        }
+
+        if(Auth::attempt($credentials) && $user->status == UserStatusEnum::ACTIVE->value){
             $request->session()->regenerate();
 
             if (Auth::user()->must_change_password){
@@ -80,6 +99,7 @@ class AuthController extends Controller
         $user->must_change_password = false;
         $user->password_changed_at = Carbon::now();
         $user->last_login_at = Carbon::now();
+        $user->token = null;
         $user->status = UserStatusEnum::ACTIVE->value;
         $user->save();
 
@@ -178,6 +198,7 @@ class AuthController extends Controller
 
         return redirect()->route('login')->with('success', 'Senha alterada com sucesso.');
     }
+
 
 
     public function logout(): RedirectResponse

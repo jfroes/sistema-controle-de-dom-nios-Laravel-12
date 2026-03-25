@@ -23,8 +23,14 @@
             Configurações
         </a>
 
-        <a href="{{route('users.index')}}" class="{{ request()->is('*users*') ? $ui['sidebarItemActive'] : $ui['sidebarItem'] }}">
+        @can('user_is_admin')
+        <a href="{{route('users.index')}}" class="{{ request()->is('users') ? $ui['sidebarItemActive'] : $ui['sidebarItem'] }}">
             Usuários
+        </a>
+        @endcan
+
+        <a href="{{route('users.show', Auth::user())}}" class="{{ request()->is('*users/'. Auth::user()->id) ? $ui['sidebarItemActive'] : $ui['sidebarItem'] }}">
+            Perfil
         </a>
     </nav>
 

@@ -5,10 +5,13 @@ namespace App\Http\Controllers\User;
 use App\Enums\UserRoleEnum;
 use App\Enums\UserStatusEnum;
 use App\Http\Controllers\Controller;
+use App\Mail\NewUserConfirmation;
+use App\Mail\ResetPassword;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -48,9 +51,17 @@ class UserController extends Controller
         $user->role = $request->perfil;
         $user->token = Str::random(64);
         $user->must_change_password = true;
+
+
+        $result = Mail::to($user->email)->send(new NewUserConfirmation($user->full_name, $user->email, $request->senha_temporaria));
+
+        if (!$result){
+            return redirect()->back()->with('error', 'Erro ao enviar o e-mail de confirmação de cadastro.');
+        }
+
         $user->save();
 
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'E-mail de confirmação enviado ao usuário com sucesso.');
     }
 
     public function index(): View

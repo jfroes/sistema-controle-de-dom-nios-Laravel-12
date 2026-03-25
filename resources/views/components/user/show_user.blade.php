@@ -27,30 +27,36 @@
                 </div>
             </div>
         </section>
+        @if(Auth::user()->id === $user->id || Gate::allows('user_is_admin'))
+            <section class="{{ $ui['card'] }}">
+                <div class="{{ $ui['cardBody'] }} flex flex-wrap gap-3">
 
-        <section class="{{ $ui['card'] }}">
-            <div class="{{ $ui['cardBody'] }} flex flex-wrap gap-3">
-                <a href="{{route('users.edit', $user)}}" class="{{ $ui['btnSecondary'] }}">Editar dados</a>
-                <form action="{{route('users.status', $user)}}" method="POST">
-                    @csrf
-                    @method('PUT')
+                        <a href="{{route('users.edit', $user)}}" class="{{ $ui['btnSecondary'] }}">Editar dados</a>
 
-                    @if($user->status->value == 'ativo')
-                        <button type="submit" class="{{ $ui['btnWarning'] }}">Desativar usuário</button>
-                    @else
-                        <button type="submit" class="{{ $ui['btnWarning'] }}">Ativar usuário</button>
-                    @endif
-                </form>
-                <a href="{{route('users.deleteConfirmation', $user)}}" class="{{ $ui['btnDanger'] }}">Excluir permanentemente</a>
-            </div>
-        </section>
 
+                    @can('user_is_admin')
+                    <form action="{{route('users.status', $user)}}" method="POST">
+                        @csrf
+                        @method('PUT')
+
+                        @if($user->status->value == 'ativo')
+                            <button type="submit" class="{{ $ui['btnWarning'] }}">Desativar usuário</button>
+                        @else
+                            <button type="submit" class="{{ $ui['btnWarning'] }}">Ativar usuário</button>
+                        @endif
+                    </form>
+                    <a href="{{route('users.deleteConfirmation', $user)}}" class="{{ $ui['btnDanger'] }}">Excluir permanentemente</a>
+                    @endcan
+                </div>
+            </section>
+        @endif
+        @can('user_is_admin')
         <section class="{{ $ui['card'] }}">
             <div class="{{ $ui['cardHeader'] }}">
                 <h2 class="text-lg font-semibold text-slate-900">Definir senha temporária</h2>
                 <p class="text-sm text-slate-500 mt-1">Gere uma nova senha para reenvio de primeiro acesso.</p>
             </div>
-            @can('user_is_admin')
+
                 <div class="{{ $ui['cardBody'] }}">
                     <form action="{{route('users.changePassword', $user)}}" method="POST" class="grid md:grid-cols-[1fr_auto] gap-3 items-end">
                         @csrf

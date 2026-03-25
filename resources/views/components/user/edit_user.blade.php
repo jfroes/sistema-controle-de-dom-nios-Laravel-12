@@ -47,7 +47,7 @@
                     @endcan
                     <div class="flex flex-wrap gap-3 pt-2">
                         <button type="submit" class="{{ $ui['btnPrimary'] }}">Salvar alterações</button>
-                        <a href="{{url()->previous()}}" class="{{ $ui['btnSecondary'] }}">Cancelar</a>
+                        <a href="{{Gate::allows('user_is_admin') ? url()->previous() : route('users.show', Auth::user())}}" class="{{ $ui['btnSecondary'] }}">Cancelar</a>
                     </div>
                 </form>
             </div>
