@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('domains', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('client_id')->constrained();
-            $table->string('url');
-            $table->string('host');
-            $table->string('host_user');
-            $table->dateTime('expires_at');
-            $table->string('status')->default('bloqueado');
+            $table->string('name');
+
+            $table->foreignId('client_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('registrar_account_id')->constrained()->cascadeOnDelete();
+
+            $table->string('host')->nullable();
+            $table->string('host_user')->nullable();
+            $table->date('expires_at');
+            $table->string('status')->default('ativo');
             $table->timestamps();
             $table->softDeletes();
         });
