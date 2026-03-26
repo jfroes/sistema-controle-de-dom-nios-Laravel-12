@@ -28,4 +28,57 @@ return $ui = [
     'filterBtnActive' => 'rounded-lg border border-slate-800 bg-slate-800 px-3 py-2 text-sm font-medium text-white',
     'errorText' => 'text-red-500 text-red-600 transition-colors text-sm',
     'successText' => 'text-emerald-500 text-emerald-600 transition-colors text-sm',
+    'btnVariants' => [
+        'success' => [
+            [
+                'name' => 'Emerald Solid',
+                'icon' => 'check-circle',
+                'class' => 'inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500 transition-colors',
+            ],
+            [
+                'name' => 'Green Soft',
+                'icon' => 'sparkles',
+                'class' => 'inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-800 hover:bg-emerald-200 transition-colors',
+            ],
+            [
+                'name' => 'Teal Outline',
+                'icon' => 'shield-check',
+                'class' => 'inline-flex items-center justify-center gap-2 rounded-lg border border-teal-600 bg-white px-4 py-2 text-sm font-medium text-teal-700 hover:bg-teal-50 transition-colors',
+            ],
+        ],
+        'warning' => [
+            [
+                'name' => 'Amber Solid',
+                'icon' => 'triangle-alert',
+                'class' => 'inline-flex items-center justify-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-sm font-medium text-slate-900 hover:bg-amber-400 transition-colors',
+            ],
+            [
+                'name' => 'Orange Soft',
+                'icon' => 'alert-circle',
+                'class' => 'inline-flex items-center justify-center gap-2 rounded-lg bg-orange-100 px-4 py-2 text-sm font-medium text-orange-800 hover:bg-orange-200 transition-colors',
+            ],
+            [
+                'name' => 'Yellow Outline',
+                'icon' => 'bell-ring',
+                'class' => 'inline-flex items-center justify-center gap-2 rounded-lg border border-yellow-500 bg-white px-4 py-2 text-sm font-medium text-yellow-700 hover:bg-yellow-50 transition-colors',
+            ],
+        ],
+        'error' => [
+            [
+                'name' => 'Red Solid',
+                'icon' => 'x-circle',
+                'class' => 'inline-flex items-center justify-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-500 transition-colors',
+            ],
+            [
+                'name' => 'Rose Soft',
+                'icon' => 'ban',
+                'class' => 'inline-flex items-center justify-center gap-2 rounded-lg bg-rose-100 px-4 py-2 text-sm font-medium text-rose-800 hover:bg-rose-200 transition-colors',
+            ],
+            [
+                'name' => 'Crimson Outline',
+                'icon' => 'octagon-alert',
+                'class' => 'inline-flex items-center justify-center gap-2 rounded-lg border border-red-700 bg-white px-4 py-2 text-sm font-medium text-red-700 hover:bg-red-50 transition-colors',
+            ],
+        ],
+    ],
 ];

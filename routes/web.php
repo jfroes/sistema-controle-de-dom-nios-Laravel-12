@@ -15,7 +15,7 @@ Route::middleware('guest')->group(function () {
 });
 
 
-Route::middleware(['auth', 'check_password_changed'])->group(function () {
+Route::middleware(['auth', 'check_password_changed', 'check_user_status'])->group(function () {
 
     Route::get('/', fn() => redirect()->route('dashboard'));
 

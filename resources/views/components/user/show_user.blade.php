@@ -40,9 +40,9 @@
                         @method('PUT')
 
                         @if($user->status->value == 'ativo')
-                            <button type="submit" class="{{ $ui['btnWarning'] }}">Desativar usuário</button>
+                            <button type="submit" class="{{ $ui['btnVariants']['error']['2']['class'] }}">Bloquear usuário</button>
                         @else
-                            <button type="submit" class="{{ $ui['btnWarning'] }}">Ativar usuário</button>
+                            <button type="submit" class="{{ $ui['btnVariants']['error']['2']['class'] }}">Desbloquear usuário</button>
                         @endif
                     </form>
                     <a href="{{route('users.deleteConfirmation', $user)}}" class="{{ $ui['btnDanger'] }}">Excluir permanentemente</a>

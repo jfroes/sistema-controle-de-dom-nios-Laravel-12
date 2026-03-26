@@ -107,7 +107,7 @@ class UserController extends Controller
     {
 
         if ($user->status == UserStatusEnum::ACTIVE){
-            $user->status = UserStatusEnum::INACTIVE;
+            $user->status = UserStatusEnum::BLOCKED;
             $user->save();
         }else{
             $user->status = UserStatusEnum::ACTIVE;

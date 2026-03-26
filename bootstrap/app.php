@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\CheckPasswordChanged;
+use App\Http\Middleware\CheckUserStatus;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -12,7 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->alias(['check_password_changed'=>CheckPasswordChanged::class]);
+        $middleware->alias(['check_password_changed'=>CheckPasswordChanged::class, 'check_user_status'=>CheckUserStatus::class]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
