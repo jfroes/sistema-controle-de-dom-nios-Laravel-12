@@ -1,5 +1,5 @@
 <x-layouts.main-layout title="Dashboard | Domínios">
-    @aware(['ui'])
+
 
     <div class="space-y-6">
         <header class="flex justify-between items-center">
@@ -17,21 +17,54 @@
             <article class="{{ $ui['card'] }}">
                 <div class="{{ $ui['cardBody'] }}">
                     <p class="text-sm text-slate-500">Total de domínios</p>
-                    <p class="text-3xl font-semibold text-slate-900 mt-2">124</p>
+                    @if($domains->count() > 0)
+                        <p class="text-3xl font-semibold text-slate-900 mt-2">{{$domains->count()}}</p>
+                    @else
+                        <p class="text-sm font-light text-slate-900 mt-2 italic">Nenhum domínio cadastrado</p>
+                    @endif
                 </div>
             </article>
             <article class="{{ $ui['card'] }}">
                 <div class="{{ $ui['cardBody'] }}">
                     <p class="text-sm text-slate-500">Expiram em até 30 dias</p>
-                    <p class="text-3xl font-semibold text-amber-600 mt-2">18</p>
+                    <p class="text-3xl font-semibold text-amber-600 mt-2">{{$expiresIn30days->count()}}</p>
                 </div>
             </article>
             <article class="{{ $ui['card'] }}">
                 <div class="{{ $ui['cardBody'] }}">
                     <p class="text-sm text-slate-500">Expirados</p>
-                    <p class="text-3xl font-semibold text-red-600 mt-2">3</p>
+                    <p class="text-3xl font-semibold text-red-600 mt-2">{{$expired->count()}}</p>
                 </div>
             </article>
+        </section>
+
+        <section class="{{ $ui['card'] }}">
+            <div class="{{ $ui['cardHeader'] }}">
+                <h2 class="text-lg font-semibold text-slate-900">Expirados</h2>
+            </div>
+            <div class="{{ $ui['cardBody'] }}">
+                <div class="{{ $ui['tableWrap'] }}">
+                    <table class="{{ $ui['table'] }}">
+                        <thead>
+                        <tr>
+                            <th class="{{ $ui['th'] }}">Domínio</th>
+                            <th class="{{ $ui['th'] }}">Cliente</th>
+                            <th class="{{ $ui['th'] }}">Expiração</th>
+                            <th class="{{ $ui['th'] }}">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($expired as $domain)
+                            <tr>
+                                <td class="{{ $ui['td'] }}">{{$domain->name}}</td>
+                                <td class="{{ $ui['td'] }}">{{$domain->client->name }}</td>
+                                <td class="{{ $ui['td'] }}">{{$domain->expires_at->format('d/m/Y') }}</td>
+                                <td class="{{ $ui['td'] }}"><span class="{{ $ui['badgeDanger'] }}">Expirado</span></td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
         </section>
 
         <section class="{{ $ui['card'] }}">
@@ -50,18 +83,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td class="{{ $ui['td'] }}">cliente-a.com.br</td>
-                            <td class="{{ $ui['td'] }}">Cliente A</td>
-                            <td class="{{ $ui['td'] }}">05/04/2026</td>
-                            <td class="{{ $ui['td'] }}"><span class="{{ $ui['badgeWarning'] }}">Vence em breve</span></td>
-                        </tr>
-                        <tr>
-                            <td class="{{ $ui['td'] }}">cliente-b.io</td>
-                            <td class="{{ $ui['td'] }}">Cliente B</td>
-                            <td class="{{ $ui['td'] }}">12/04/2026</td>
-                            <td class="{{ $ui['td'] }}"><span class="{{ $ui['badgeOk'] }}">Dentro do prazo</span></td>
-                        </tr>
+                        @foreach($expiresIn30days as $domain)
+                            <tr>
+                                <td class="{{ $ui['td'] }}">{{$domain->name}}</td>
+                                <td class="{{ $ui['td'] }}">{{$domain->client->name }}</td>
+                                <td class="{{ $ui['td'] }}">{{$domain->expires_at->format('d/m/Y') }}</td>
+                                <td class="{{ $ui['td'] }}"><span class="{{ $ui['badgeWarning'] }}">Vence em breve</span></td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>

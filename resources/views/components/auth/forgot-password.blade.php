@@ -1,5 +1,5 @@
 <x-layouts.main-layout title="Esqueci a Senha">
-    @aware(['ui'])
+
     <section class="w-full max-w-md {{ $ui['card'] }}">
         <div class="{{ $ui['cardHeader'] }}">
             <h1 class="{{ $ui['title'] }}">Esqueci minha senha</h1>

@@ -3,6 +3,10 @@
 
 use App\Http\Controllers\User\UserController;
 
+Route::get('/', fn() => redirect()->route('dashboard'));
+
+Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
+
 Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
 Route::post('/users', [UserController::class, 'store'])->name('users.store');
 

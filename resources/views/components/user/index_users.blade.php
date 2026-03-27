@@ -1,5 +1,5 @@
 <x-layouts.main-layout title="Usuários">
-    @aware(['ui'])
+
 
     <div class="space-y-6">
         <header class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">

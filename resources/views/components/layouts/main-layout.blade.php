@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{$title ?? 'Page'}}</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    @livewireStyles
 </head>
 <body class="{{ $ui['pageBg'] }} min-h-screen">
 
@@ -28,9 +29,9 @@
             {{$slot}}
         </main>
     @else
-        <div class="flex min-h-screen">
+        <div class="flex h-screen overflow-hidden">
             <x-admin.sidebar />
-            <main class="flex-1 p-6 md:p-8">
+            <main class="flex-1 min-h-0 overflow-y-auto p-6 md:p-8">
                 {{$slot}}
             </main>
         </div>
@@ -39,5 +40,6 @@
 @endauth
 
 <x-layouts.partials.flash-messages/>
+@livewireScripts
 </body>
 </html>

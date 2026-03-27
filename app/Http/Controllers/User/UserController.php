@@ -7,9 +7,11 @@ use App\Enums\UserStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Mail\NewUserConfirmation;
 use App\Mail\ResetPassword;
+use App\Models\Domain;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -18,6 +20,20 @@ use Illuminate\View\View;
 
 class UserController extends Controller
 {
+    public function dashboard(): View
+    {
+        $domains = Domain::all();
+        $expiresIn30days = $domains->filter(function ($domain) {
+            return $domain->expires_at > Carbon::now() && $domain->expires_at <= Carbon::now()->addDays(30);
+        });
+
+        $expired = $domains->filter(function ($domain) {
+            return $domain->expires_at <= Carbon::now();
+        });
+
+        return view('components.admin.dashboard', compact('domains', 'expiresIn30days', 'expired'));
+    }
+
     public function create(): View{
         $roles = UserRoleEnum::cases();
 

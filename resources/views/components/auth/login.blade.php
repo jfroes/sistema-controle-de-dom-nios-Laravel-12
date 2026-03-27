@@ -1,5 +1,5 @@
 <x-layouts.main-layout title="Login" >
-    @aware(['ui'])
+
 
     <section class="w-full max-w-md {{ $ui['card'] }}">
         <div class="{{ $ui['cardHeader'] }}">

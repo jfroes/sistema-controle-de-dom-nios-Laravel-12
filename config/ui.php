@@ -1,5 +1,5 @@
 <?php
-return $ui = [
+return [
     'pageBg' => 'bg-slate-100 text-slate-800',
     'card' => 'bg-white border border-slate-200 rounded-xl shadow-sm',
     'cardHeader' => 'px-6 py-4 border-b border-slate-200',

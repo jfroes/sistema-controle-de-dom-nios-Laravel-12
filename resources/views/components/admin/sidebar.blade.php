@@ -1,5 +1,3 @@
-@aware(['ui'])
-
 <aside class="w-72 shrink-0 bg-slate-800 text-slate-100 h-screen p-4 flex flex-col overflow-hidden">
     <div class="px-2 py-4 border-b border-slate-700 mb-4">
         <h2 class="text-lg font-semibold">Admin Domínios</h2>
@@ -15,7 +13,7 @@
             Clientes
         </a>
 
-        <a href="#" class="{{ request()->is('*dominios*') ? $ui['sidebarItemActive'] : $ui['sidebarItem'] }}">
+        <a href="{{route('domains.index')}}" class="{{ request()->is('*domains*') ? $ui['sidebarItemActive'] : $ui['sidebarItem'] }}">
             Domínios
         </a>
 
