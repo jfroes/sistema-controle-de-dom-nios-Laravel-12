@@ -14,10 +14,17 @@
                 <div class="{{ $ui['cardBody'] }} space-y-2">
                     <p class="text-xs uppercase tracking-wide text-slate-500">Cliente</p>
                     <p class="text-sm text-slate-900">{{$domain->client->name}}</p>
+                    <div class="flex justify-between space-y-2">
+                        <div class="space-y-2">
+                        <p class="text-xs uppercase tracking-wide text-slate-500 pt-2">Registrador</p>
+                        <p class="text-sm text-slate-900">{{$domain->registrarAccount->registrar->name}}</p>
+                        </div>
 
-                    <p class="text-xs uppercase tracking-wide text-slate-500 pt-2">Conta de registrador</p>
-                    <p class="text-sm text-slate-900">{{$domain->registrarAccount->label}}</p>
-
+                        <div class="space-y-2">
+                            <p class="text-xs uppercase tracking-wide text-slate-500 pt-2">Conta de registrador</p>
+                            <p class="text-sm text-slate-900">{{$domain->registrarAccount->label}}</p>
+                        </div>
+                    </div>
                     <p class="text-xs uppercase tracking-wide text-slate-500 pt-2">Status</p>
                     <p><span class="inline-flex rounded-full bg-{{$domain->status->color()}}-100 px-2.5 py-1 text-xs font-medium text-{{$domain->status->color()}}-700">{{$domain->status}}</span></p>
                 </div>
