@@ -29,7 +29,7 @@ CREATE TABLE `clients` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +38,9 @@ CREATE TABLE `clients` (
 
 LOCK TABLES `clients` WRITE;
 /*!40000 ALTER TABLE `clients` DISABLE KEYS */;
+INSERT INTO `clients` VALUES (1,'Empresa Alpha',NULL,NULL,NULL);
+INSERT INTO `clients` VALUES (2,'Startup Beta',NULL,NULL,NULL);
+INSERT INTO `clients` VALUES (3,'Cliente Gamma',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -50,19 +53,22 @@ DROP TABLE IF EXISTS `domains`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `domains` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `client_id` bigint unsigned NOT NULL,
-  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `host` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `host_user` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expires_at` datetime NOT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'bloqueado',
+  `registrar_account_id` bigint unsigned NOT NULL,
+  `host` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `host_user` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `expires_at` date NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ativo',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `domains_client_id_foreign` (`client_id`),
-  CONSTRAINT `domains_client_id_foreign` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `domains_registrar_account_id_foreign` (`registrar_account_id`),
+  CONSTRAINT `domains_client_id_foreign` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `domains_registrar_account_id_foreign` FOREIGN KEY (`registrar_account_id`) REFERENCES `registrar_accounts` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,6 +77,22 @@ CREATE TABLE `domains` (
 
 LOCK TABLES `domains` WRITE;
 /*!40000 ALTER TABLE `domains` DISABLE KEYS */;
+INSERT INTO `domains` VALUES (1,'empresaalpha.com',1,1,'hostgator','alpha_user','2027-03-26','ativo',NULL,NULL,NULL);
+INSERT INTO `domains` VALUES (2,'startupbeta.io',2,2,'aws','beta_user','2026-09-26','inativo',NULL,NULL,NULL);
+INSERT INTO `domains` VALUES (3,'clientegamma.com.br',3,3,'Hostinger','desenvolvimento','2026-02-26','expirado','2026-03-26 20:56:03',NULL,NULL);
+INSERT INTO `domains` VALUES (4,'dominio4.com.br',3,3,'Hostinger','desenvolvimento','2026-03-31','ativo','2026-03-26 20:55:50',NULL,NULL);
+INSERT INTO `domains` VALUES (5,'empresaalpha.com',1,1,'hostgator','alpha_user','2027-03-26','ativo',NULL,NULL,NULL);
+INSERT INTO `domains` VALUES (6,'startupbeta.io',2,2,'aws','beta_user','2026-09-26','inativo',NULL,NULL,NULL);
+INSERT INTO `domains` VALUES (7,'clientegamma.com.br',3,3,'Hostinger','desenvolvimento','2026-02-26','expirado','2026-03-26 20:56:03',NULL,NULL);
+INSERT INTO `domains` VALUES (8,'dominio4.com.br',3,3,'Hostinger','desenvolvimento','2026-03-31','ativo','2026-03-26 20:55:50',NULL,NULL);
+INSERT INTO `domains` VALUES (12,'empresaalpha.com',1,1,'hostgator','alpha_user','2027-03-26','ativo',NULL,NULL,NULL);
+INSERT INTO `domains` VALUES (13,'startupbeta.io',2,2,'aws','beta_user','2026-09-26','inativo',NULL,NULL,NULL);
+INSERT INTO `domains` VALUES (14,'clientegamma.com.br',3,3,'Hostinger','desenvolvimento','2026-02-26','expirado','2026-03-26 20:56:03',NULL,NULL);
+INSERT INTO `domains` VALUES (15,'dominio4.com.br',3,3,'Hostinger','desenvolvimento','2026-03-31','ativo','2026-03-26 20:55:50',NULL,NULL);
+INSERT INTO `domains` VALUES (16,'empresaalpha.com',1,1,'hostgator','alpha_user','2027-03-26','ativo',NULL,NULL,NULL);
+INSERT INTO `domains` VALUES (17,'startupbeta.io',2,2,'aws','beta_user','2026-09-26','inativo',NULL,NULL,NULL);
+INSERT INTO `domains` VALUES (18,'clientegamma.com.br',3,3,'Hostinger','desenvolvimento','2026-02-26','expirado','2026-03-26 20:56:03',NULL,NULL);
+INSERT INTO `domains` VALUES (19,'dominio4.com.br',3,3,'Hostinger','desenvolvimento','2026-03-31','ativo','2026-03-26 20:55:50',NULL,NULL);
 /*!40000 ALTER TABLE `domains` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,7 +108,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,12 +117,78 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (1,'2026_03_22_184249_create_clients_table',1);
-INSERT INTO `migrations` VALUES (2,'2026_03_22_184259_create_domains_table',1);
-INSERT INTO `migrations` VALUES (3,'2026_03_22_190505_create_users_table',1);
-INSERT INTO `migrations` VALUES (4,'2026_03_23_170635_add_columns_to_users_table',2);
-INSERT INTO `migrations` VALUES (5,'2026_03_25_010212_add_softdeletes_column_to_users_table',3);
+INSERT INTO `migrations` VALUES (1,'2026_03_22_190505_create_users_table',1);
+INSERT INTO `migrations` VALUES (2,'2026_03_23_170635_add_columns_to_users_table',1);
+INSERT INTO `migrations` VALUES (3,'2026_03_25_010212_add_softdeletes_column_to_users_table',1);
+INSERT INTO `migrations` VALUES (4,'2026_03_26_125040_create_clients_table',1);
+INSERT INTO `migrations` VALUES (5,'2026_03_26_125041_create_registrars_table',1);
+INSERT INTO `migrations` VALUES (6,'2026_03_26_125042_create_registrar_accounts_table',1);
+INSERT INTO `migrations` VALUES (7,'2026_03_26_125043_create_domains_table',1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `registrar_accounts`
+--
+
+DROP TABLE IF EXISTS `registrar_accounts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `registrar_accounts` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `registrar_id` bigint unsigned NOT NULL,
+  `label` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notes` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `registrar_accounts_registrar_id_foreign` (`registrar_id`),
+  CONSTRAINT `registrar_accounts_registrar_id_foreign` FOREIGN KEY (`registrar_id`) REFERENCES `registrars` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `registrar_accounts`
+--
+
+LOCK TABLES `registrar_accounts` WRITE;
+/*!40000 ALTER TABLE `registrar_accounts` DISABLE KEYS */;
+INSERT INTO `registrar_accounts` VALUES (1,1,'Conta Principal GoDaddy','admin@godaddy.com','Conta principal da empresa',NULL,NULL,NULL);
+INSERT INTO `registrar_accounts` VALUES (2,2,'Conta Namecheap Dev','dev@namecheap.com',NULL,NULL,NULL,NULL);
+INSERT INTO `registrar_accounts` VALUES (3,3,'Conta Registro.br','contato@empresa.com','Domínios .br',NULL,NULL,NULL);
+/*!40000 ALTER TABLE `registrar_accounts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `registrars`
+--
+
+DROP TABLE IF EXISTS `registrars`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `registrars` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `website` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `registrars`
+--
+
+LOCK TABLES `registrars` WRITE;
+/*!40000 ALTER TABLE `registrars` DISABLE KEYS */;
+INSERT INTO `registrars` VALUES (1,'GoDaddy','https://godaddy.com',NULL,NULL,NULL);
+INSERT INTO `registrars` VALUES (2,'Namecheap','https://namecheap.com',NULL,NULL,NULL);
+INSERT INTO `registrars` VALUES (3,'Registro.br','https://registro.br',NULL,NULL,NULL);
+/*!40000 ALTER TABLE `registrars` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -128,7 +216,7 @@ CREATE TABLE `users` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -137,10 +225,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (2,'José','admin@email.com','$2y$12$XPwJiAoUiiK4KyCviiA/r.xaBySESH/Cy.RN8DlvxDenTAxk.t6yS','admin',NULL,0,'2026-03-23 14:10:08','2026-03-22 21:49:01','2026-03-25 18:28:35',NULL,'ativo','2026-03-23 00:49:01','2026-03-25 21:28:35',NULL);
-INSERT INTO `users` VALUES (5,'Nelson','mandela@email.com','$2y$12$qpebyojmyNYDSSHBYekh4eHvGunityHvGvuZMzlXYt4XEurnGwHdq','admin','yxkdTH9zAHEgBk67HkrlpyKjCdNQegOeqcmpuWn2qxcfPF62dSMkSJhylHtATeAq',0,'2026-03-23 19:56:21',NULL,'2026-03-23 19:56:21',NULL,'ativo','2026-03-23 17:06:51','2026-03-25 04:50:30','2026-03-25 04:50:30');
-INSERT INTO `users` VALUES (7,'Raiane Vecanandre de Raio Lazer','raiane@email.com','$2y$12$ut0cnyyCIqJADjLp/9SyOOewhHKSrxuHeUrw3s1pMUiKuBt6WWs/q','user',NULL,0,'2026-03-25 14:46:38',NULL,'2026-03-25 14:46:38',NULL,'ativo','2026-03-23 23:42:47','2026-03-25 17:46:38',NULL);
-INSERT INTO `users` VALUES (9,'Alírio Neandertal da Silveira','user1@email.com','$2y$12$TYpRx0/WotRTC0CELFwKpuGOBNlJKDHKMCPMzuCkAOo8Vi3OugfNa','user',NULL,0,'2026-03-25 18:55:50',NULL,'2026-03-25 18:55:50',NULL,'ativo','2026-03-25 21:28:58','2026-03-26 01:06:00',NULL);
+INSERT INTO `users` VALUES (1,'John Doe','admin@email.com','$2y$12$FG3g2rNNyinxNWwgEswaiOXbr/UmqTtkuBtBRVzyo1o8TfPGZ/7ia','admin',NULL,0,NULL,'2026-03-26 13:22:05',NULL,NULL,'ativo','2026-03-26 16:22:05','2026-03-26 16:22:05',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -153,4 +238,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-25 19:06:08
+-- Dump completed on 2026-03-26 23:38:25

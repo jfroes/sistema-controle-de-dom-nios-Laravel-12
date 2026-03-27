@@ -226,11 +226,11 @@ new class extends Component {
 
                     <td class="{{ $ui['td'] }}">{{$diferenca}}</td>
                     <td class="{{ $ui['td'] }}">
-                        <span class="'inline-flex rounded-full bg-{{$domain->status->color()}}-100 px-2.5 py-1 text-xs font-medium text-{{$domain->status->color()}}-700'">{{$domain->status->label()}}</span>
+                        <span class="inline-flex rounded-full bg-{{$domain->status->color()}}-100 px-2.5 py-1 text-xs font-medium text-{{$domain->status->color()}}-700">{{$domain->status->label()}}</span>
                     </td>
                     <td class="{{ $ui['td'] }}">
                         <div class="flex flex-wrap gap-3">
-                            <a class="text-slate-700 hover:text-slate-900" href="{{ url('admin/dominios/1') }}">Ver</a>
+                            <a class="text-slate-700 hover:text-slate-900" href="{{ route('domains.show', $domain) }}">Ver</a>
                             <a class="text-slate-700 hover:text-slate-900" href="{{ url('admin/dominios/1/edit') }}">Editar</a>
                             <a class="text-red-700 hover:text-red-800"
                                href="{{ url('admin/dominios/1/delete-confirm') }}">Deletar</a>

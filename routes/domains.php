@@ -1,6 +1,8 @@
 <?php
 
 
-use App\Http\Controllers\Domain;
+use App\Http\Controllers\Domain\DomainController;
 
-Route::get('/domains', [Domain\DomainController::class, 'index'])->name('domains.index');
+Route::get('/domains', [DomainController::class, 'index'])->name('domains.index');
+
+Route::get('/domains/{domain}', [DomainController::class, 'show'])->name('domains.show');
