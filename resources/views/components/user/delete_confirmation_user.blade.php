@@ -1,5 +1,5 @@
 <x-layouts.main-layout title="Confirmar Exclusão">
-@aware(['ui'])
+
     <div class="max-w-2xl">
         <section class="{{ $ui['card'] }} border-red-200">
             <div class="{{ $ui['cardHeader'] }}">

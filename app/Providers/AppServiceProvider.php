@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Enums\UserRoleEnum;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,7 +23,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //Gates
+        //UI Components
+        View::share('ui', config('ui'));
+            //Gates
         Gate::define('user_is_admin', function (User $user) {
             return $user->role === UserRoleEnum::ADMIN;
         });

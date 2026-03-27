@@ -17,17 +17,11 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware(['auth', 'check_password_changed', 'check_user_status'])->group(function () {
 
-    Route::get('/', fn() => redirect()->route('dashboard'));
-
-    Route::get('/dashboard', function (){
-        return view('components.admin.dashboard');
-    })->name('dashboard');
-
     Route::get('/first-login', [AuthController::class, 'firstLogin'])->name('first-login');
-
 
     require __DIR__.'/auth.php';
     require __DIR__.'/user.php';
+    require __DIR__.'/domains.php';
 
 });
 

@@ -1,5 +1,5 @@
 <x-layouts.main-layout title="Reset de Senha">
-    @aware(['ui'])
+
 
     <section class="w-full max-w-md {{ $ui['card'] }} place-self-center">
         <div class="{{ $ui['cardHeader'] }}">

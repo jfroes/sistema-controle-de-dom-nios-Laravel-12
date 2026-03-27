@@ -1,5 +1,5 @@
 <x-layouts.main-layout title="Detalhes do Usuário">
-    @aware(['ui'])
+
 
     <div class="space-y-6">
         <header>

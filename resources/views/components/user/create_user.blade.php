@@ -1,5 +1,5 @@
 <x-layouts.main-layout title="Cadastro de Usuário">
-    @aware(['ui'])
+
 
     <div class="space-y-6 max-w-3xl">
         <header>
