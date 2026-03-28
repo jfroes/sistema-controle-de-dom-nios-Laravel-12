@@ -32,8 +32,49 @@ class DomainController extends Controller
 
     public function create(): View
     {
-        dd('create');
-        return view('components.domains.create');
+        $clients = Client::all();
+        $statuses = DomainStatusEnum::cases();
+        $registrarAccounts = RegistrarAccount::all();
+        return view('components.domains.create', compact('clients', 'statuses', 'registrarAccounts'));
+    }
+
+    public function store(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'dominio' => ['required', 'url', Rule::unique('domains', 'name'),'min:3', 'max:255'],
+            'cliente_id' => 'required|exists:clients,id',
+            'expira_em' => 'required|date|after:today',
+            'host' => 'max:64',
+            'usuario_host' => 'max:64',
+            'status' => 'required',
+            'conta_registrador_id' => 'required|exists:registrar_accounts,id',
+        ],[
+            'dominio.unique' => 'Este dominio já existe',
+            'dominio.url' => 'O domínio deve ser uma URL válida',
+            'dominio.required' => 'O domínio é obrigatório',
+            'dominio.min' => 'O domínio deve ter pelo menos :min caracteres',
+            'dominio.max' => 'O domínio deve ter no máximo :max caracteres',
+            'cliente_id.required' => 'O cliente é obrigatório',
+            'cliente_id.exists' => 'O cliente selecionado é inválido',
+            'expira_em.required' => 'A data de expiração é obrigatória',
+            'expira_em.date' => 'A data de expiração deve ser uma data válida',
+            'expira_em.after' => 'A data de expiração deve ser uma data futura',
+            'host.max' => 'O host deve ter no máximo :max caracteres',
+            'usuario_host.max' => 'O usuário do host deve ter no máximo :max caracteres',
+            'status.required' => 'O status é obrigatório',
+            'conta_registrador_id.required' => 'A conta do registrador é obrigatória',
+            'conta_registrador_id.exists' => 'A conta do registrador selecionada é inválida',
+        ]);
+
+        $domain = new Domain();
+
+        $this->extracted($request, $domain);
+
+        if ($domain->save()) {
+            return redirect()->route('domains.index')->with('success', 'Domínio cadastrado com sucesso!');
+        }
+
+        return redirect()->back()->with('error', 'Ocorreu um erro ao cadastrar o domínio. Por favor, tente novamente.');
     }
 
     public function edit(Domain $domain): View
@@ -49,11 +90,11 @@ class DomainController extends Controller
     public function update(Request $request, Domain $domain): RedirectResponse
     {
         $request->validate([
-            'dominio' => ['required', 'url', Rule::unique('domains', 'name')->ignore($domain->id),'min:4', 'max:255'],
+            'dominio' => ['required', 'url', Rule::unique('domains', 'name')->ignore($domain->id),'min:3', 'max:255'],
             'cliente_id' => 'required|exists:clients,id',
             'expira_em' => 'required|date|after:today',
-            'host' => 'required|string|min:4|max:64',
-            'usuario_host' => 'required|string|min:4|max:64',
+            'host' => 'max:64',
+            'usuario_host' => 'max:64',
             'status' => 'required',
             'conta_registrador_id' => 'required|exists:registrar_accounts,id',
         ],[
@@ -67,34 +108,20 @@ class DomainController extends Controller
             'expira_em.required' => 'A data de expiração é obrigatória',
             'expira_em.date' => 'A data de expiração deve ser uma data válida',
             'expira_em.after' => 'A data de expiração deve ser uma data futura',
-            'host.required' => 'O host é obrigatório',
-            'host.string' => 'O host deve ser uma string',
-            'host.min' => 'O host deve ter pelo menos :min caracteres',
             'host.max' => 'O host deve ter no máximo :max caracteres',
-            'usuario_host.required' => 'O usuário do host é obrigatório',
-            'usuario_host.string' => 'O usuário do host deve ser uma string',
-            'usuario_host.min' => 'O usuário do host deve ter pelo menos :min caracteres',
             'usuario_host.max' => 'O usuário do host deve ter no máximo :max caracteres',
             'status.required' => 'O status é obrigatório',
             'conta_registrador_id.required' => 'A conta do registrador é obrigatória',
             'conta_registrador_id.exists' => 'A conta do registrador selecionada é inválida',
         ]);
 
-         $domain->name = $request->dominio;
-         $domain->client_id = $request->cliente_id;
-         $domain->expires_at = Carbon::create($request->expira_em)->toDate();
-         $domain->host = $request->host;
-         $domain->host_user = $request->usuario_host;
-         $domain->status = $request->status;
-         $domain->registrar_account_id = $request->conta_registrador_id;
-         $domain->updated_at = Carbon::now();
-         $domain = $domain->save();
+        $this->extracted($request, $domain);
 
-         if (!$domain) {
-            return redirect()->back()->with('error', 'Ocorreu um erro ao atualizar o domínio. Por favor, tente novamente.');
+        if ($domain->save()) {
+             return redirect()->back()->with('success', 'Domínio atualizado com sucesso!');
          }
 
-        return redirect()->back()->with('success', 'Domínio atualizado com sucesso!');
+        return redirect()->back()->with('error', 'Ocorreu um erro ao atualizar o domínio. Por favor, tente novamente.');
     }
 
     public function deleteConfirmation(Domain $domain): View
@@ -119,6 +146,23 @@ class DomainController extends Controller
         $domain->delete();
 
         return redirect()->route('domains.index')->with('success', 'Domínio deletado com sucesso!');
+    }
+
+    /**
+     * @param Request $request
+     * @param Domain $domain
+     * @return void
+     */
+    public function extracted(Request $request, Domain $domain): void
+    {
+        $domain->name = $request->dominio;
+        $domain->client_id = $request->cliente_id;
+        $domain->expires_at = Carbon::create($request->expira_em)->toDate();
+        $domain->host = $request->host;
+        $domain->host_user = $request->usuario_host;
+        $domain->status = $request->status;
+        $domain->registrar_account_id = $request->conta_registrador_id;
+        $domain->updated_at = Carbon::now();
     }
 
 }

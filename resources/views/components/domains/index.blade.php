@@ -6,7 +6,7 @@
                 <h1 class="{{ $ui['title'] }}">Domínios</h1>
                 <p class="{{ $ui['subtitle'] }} mt-1">Cadastre e gerencie domínios vinculados aos clientes.</p>
             </div>
-            <a href="{{ url('admin/dominios/create') }}" class="{{ $ui['btnPrimary'] }}">Novo domínio</a>
+            <a href="{{ route('domains.create') }}" class="{{ $ui['btnPrimary'] }}">Novo domínio</a>
         </header>
 
     @livewire('domains.table_index')
