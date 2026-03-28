@@ -6,7 +6,7 @@
                 <h1 class="{{ $ui['title'] }}">Domínio: {{$domain->name}}</h1>
                 <p class="{{ $ui['subtitle'] }} mt-1">Detalhes operacionais e de renovação.</p>
             </div>
-            <a href="{{ url('admin/dominios/1/edit') }}" class="{{ $ui['btnSecondary'] }}">Editar domínio</a>
+            <a href="{{ route('domains.edit', $domain) }}" class="{{ $ui['btnSecondary'] }}">Editar domínio</a>
         </header>
 
         <section class="grid md:grid-cols-2 gap-4">
