@@ -33,7 +33,7 @@
             <article class="{{ $ui['card'] }}">
                 <div class="{{ $ui['cardBody'] }}">
                     <p class="text-sm text-slate-500">Expirados</p>
-                    <p class="text-3xl font-semibold text-red-600 mt-2">{{$expired->count()}}</p>
+                    <p class="text-3xl font-semibold text-red-600 mt-2 flex gap-4 items-center"><x-lucide-alert-circle class="w-8 "/>{{$expired->count()}}</p>
                 </div>
             </article>
         </section>

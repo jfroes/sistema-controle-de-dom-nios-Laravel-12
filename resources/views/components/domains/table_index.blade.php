@@ -203,8 +203,8 @@ new class extends Component {
                 <th class="{{ $ui['th'] }}">Registrador</th>
                 <th class="{{ $ui['th'] }}">Conta de registrador</th>
                 <th class="{{ $ui['th'] }}">Expiração</th>
-                <th class="{{ $ui['th'] }}">Dias restantes</th>
                 <th class="{{ $ui['th'] }}">Status</th>
+                <th class="{{ $ui['th'] }}">Situação</th>
                 <th class="{{ $ui['th'] }}">Ações</th>
             </tr>
             </thead>
@@ -224,16 +224,36 @@ new class extends Component {
                         $diferenca = Carbon::now()->startOfDay()->diffInDays($dataFim, false);
                     @endphp
 
-                    <td class="{{ $ui['td'] }}">{{$diferenca}}</td>
                     <td class="{{ $ui['td'] }}">
-                        <span class="inline-flex rounded-full bg-{{$domain->status->color()}}-100 px-2.5 py-1 text-xs font-medium text-{{$domain->status->color()}}-700">{{$domain->status->label()}}</span>
+                        @if($diferenca > 0 && $diferenca <= 15)
+                            <span class="{{$ui['badgeWarning']}}">Expira em {{$diferenca}} dias</span>
+                        @elseif($diferenca < 0)
+                            <span class="{{$ui['badgeDanger']}}">Expirado há {{abs($diferenca)}} dias</span>
+                        @else
+                            <span class="{{$ui['badgeOk']}}">Dentro do prazo</span>
+                        @endif
+                    </td>
+                    <td class="{{ $ui['td'] }}">
+                        <span class=" text-xs font-medium text-{{$domain->status->color()}}-600">{{$domain->status->label()}}</span>
                     </td>
                     <td class="{{ $ui['td'] }}">
                         <div class="flex flex-wrap gap-3">
-                            <a class="text-slate-700 hover:text-slate-900" href="{{ route('domains.show', $domain) }}">Ver</a>
-                            <a class="text-slate-700 hover:text-slate-900" href="{{ url('admin/dominios/1/edit') }}">Editar</a>
-                            <a class="text-red-700 hover:text-red-800"
-                               href="{{ url('admin/dominios/1/delete-confirm') }}">Deletar</a>
+                            <a class="text-slate-700 hover:text-slate-500" href="{{ route('domains.show', $domain) }}" title="Ver detalhes">
+                                <x-lucide-file-search-corner class="w-4 h-4 "/>
+
+                            </a>
+                            <a class="text-slate-700 hover:text-slate-500" href="{{ route('domains.edit', $domain) }}"  title="Editar">
+                                <x-lucide-edit class="w-4 h-4 "/>
+
+
+                            </a>
+                            @can('user_is_admin')
+                            <a class="text-red-700 hover:text-red-500"
+                               href="{{ route('domains.deleteConfirmation', $domain) }}"  title="Deletar">
+                                <x-lucide-trash class="w-4 h-4  "/>
+                            </a>
+
+                            @endcan
                         </div>
                     </td>
                 </tr>

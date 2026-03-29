@@ -68,7 +68,7 @@ CREATE TABLE `domains` (
   KEY `domains_registrar_account_id_foreign` (`registrar_account_id`),
   CONSTRAINT `domains_client_id_foreign` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE CASCADE,
   CONSTRAINT `domains_registrar_account_id_foreign` FOREIGN KEY (`registrar_account_id`) REFERENCES `registrar_accounts` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,14 +79,14 @@ LOCK TABLES `domains` WRITE;
 /*!40000 ALTER TABLE `domains` DISABLE KEYS */;
 INSERT INTO `domains` VALUES (1,'empresaalpha.com',1,1,'hostgator','alpha_user','2027-03-26','ativo',NULL,NULL,NULL);
 INSERT INTO `domains` VALUES (2,'startupbeta.io',2,2,'aws','beta_user','2026-09-26','inativo',NULL,NULL,NULL);
-INSERT INTO `domains` VALUES (3,'clientegamma.com.br',3,3,'Hostinger','desenvolvimento','2026-02-26','expirado','2026-03-26 20:56:03',NULL,NULL);
+INSERT INTO `domains` VALUES (3,'https://clientegamma.com.br',3,3,'Hostinger','desenvolvimento','2026-05-26','ativo','2026-03-26 20:56:03','2026-03-27 18:24:28',NULL);
 INSERT INTO `domains` VALUES (4,'dominio4.com.br',3,3,'Hostinger','desenvolvimento','2026-03-31','ativo','2026-03-26 20:55:50',NULL,NULL);
 INSERT INTO `domains` VALUES (5,'empresaalpha.com',1,1,'hostgator','alpha_user','2027-03-26','ativo',NULL,NULL,NULL);
 INSERT INTO `domains` VALUES (6,'startupbeta.io',2,2,'aws','beta_user','2026-09-26','inativo',NULL,NULL,NULL);
-INSERT INTO `domains` VALUES (7,'clientegamma.com.br',3,3,'Hostinger','desenvolvimento','2026-02-26','expirado','2026-03-26 20:56:03',NULL,NULL);
+INSERT INTO `domains` VALUES (7,'clientegamma.com.br',3,3,'Hostinger','desenvolvimento','2026-02-26','expirado','2026-03-26 20:56:03','2026-03-27 19:11:34','2026-03-27 19:11:34');
 INSERT INTO `domains` VALUES (8,'dominio4.com.br',3,3,'Hostinger','desenvolvimento','2026-03-31','ativo','2026-03-26 20:55:50',NULL,NULL);
 INSERT INTO `domains` VALUES (12,'empresaalpha.com',1,1,'hostgator','alpha_user','2027-03-26','ativo',NULL,NULL,NULL);
-INSERT INTO `domains` VALUES (13,'startupbeta.io',2,2,'aws','beta_user','2026-09-26','inativo',NULL,NULL,NULL);
+INSERT INTO `domains` VALUES (13,'startupbeta.io',2,2,'aws','beta_user','2026-09-26','inativo',NULL,'2026-03-27 19:11:43','2026-03-27 19:11:43');
 INSERT INTO `domains` VALUES (14,'clientegamma.com.br',3,3,'Hostinger','desenvolvimento','2026-02-26','expirado','2026-03-26 20:56:03',NULL,NULL);
 INSERT INTO `domains` VALUES (15,'dominio4.com.br',3,3,'Hostinger','desenvolvimento','2026-03-31','ativo','2026-03-26 20:55:50',NULL,NULL);
 INSERT INTO `domains` VALUES (16,'empresaalpha.com',1,1,'hostgator','alpha_user','2027-03-26','ativo',NULL,NULL,NULL);
@@ -238,4 +238,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-26 23:38:25
+-- Dump completed on 2026-03-28 17:00:26

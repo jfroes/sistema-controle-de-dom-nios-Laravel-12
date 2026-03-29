@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Enums\UserRoleEnum;
+use App\Models\Domain;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
@@ -31,6 +32,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('can_delete_users', function (User $authUser, User $target) {
+            return $authUser->role === UserRoleEnum::ADMIN;
+        });
+
+        Gate::define('can_delete_domains', function (User $authUser, Domain $domain) {
             return $authUser->role === UserRoleEnum::ADMIN;
         });
     }
