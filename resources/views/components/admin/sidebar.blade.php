@@ -6,36 +6,36 @@
 
     <nav class="space-y-1 flex-1 min-h-0">
         <a href="{{route('dashboard')}}" class="{{ request()->is('*dashboard*') ? $ui['sidebarItemActive'] : $ui['sidebarItem'] }}">
-            Dashboard
+            <x-lucide-layout-dashboard class="w-4 h-4" />Dashboard
         </a>
 
-        <a href="#" class="{{ request()->is('*clientes*') ? $ui['sidebarItemActive'] : $ui['sidebarItem'] }}">
-            Clientes
+        <a href="{{route('clients.index')}}" class="{{ request()->is('*clients*') ? $ui['sidebarItemActive'] : $ui['sidebarItem'] }}">
+            <x-lucide-handshake class="w-4 h-4" />Clientes
         </a>
 
         <a href="{{route('domains.index')}}" class="{{ request()->is('*domains*') ? $ui['sidebarItemActive'] : $ui['sidebarItem'] }}">
-            Domínios
+            <x-lucide-zap class="w-4 h-4" />Domínios
         </a>
 
         <a href="#" class="{{ request()->is('*configuracoes*') ? $ui['sidebarItemActive'] : $ui['sidebarItem'] }}">
-            Configurações
+            <x-lucide-settings-2 class="w-4 h-4" />Configurações
         </a>
 
         @can('user_is_admin')
         <a href="{{route('users.index')}}" class="{{ request()->is('users') ? $ui['sidebarItemActive'] : $ui['sidebarItem'] }}">
-            Usuários
+            <x-lucide-users class="w-4 h-4" />Usuários
         </a>
         @endcan
 
         <a href="{{route('users.show', Auth::user())}}" class="{{ request()->is('*users/'. Auth::user()->id) ? $ui['sidebarItemActive'] : $ui['sidebarItem'] }}">
-            Perfil
+            <x-lucide-user-pen class="w-4 h-4" />Perfil
         </a>
     </nav>
 
     <span class="text-xs text-slate-400">Logado como: {{Auth::user()->email}}</span>
     <div class="mt-auto pt-4 border-t border-slate-700">
         <a href="{{route('logout')}}" class="{{ $ui['sidebarItem'] }}">
-            Sair
+            <x-lucide-log-out class="w-4 h-4 rotate-180" /> Sair
         </a>
     </div>
 </aside>

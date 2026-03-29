@@ -45,6 +45,8 @@
                     </div>
 
                     <button type="submit" class="{{ $ui['btnPrimary'] }}">Cadastrar usuário</button>
+                    <a href="{{ url()->previous() }}" class="{{ $ui['btnSecondary'] }}">Cancelar</a>
+
                 </form>
             </div>
         </section>

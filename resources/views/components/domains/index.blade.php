@@ -9,6 +9,7 @@
             <a href="{{ route('domains.create') }}" class="{{ $ui['btnPrimary'] }}">Novo domínio</a>
         </header>
 
-    @livewire('domains.table_index')
+        @livewire('domains.table_index')
+
     </div>
 </x-layouts.main-layout>
