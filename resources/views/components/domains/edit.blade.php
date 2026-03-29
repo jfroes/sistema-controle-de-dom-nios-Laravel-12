@@ -14,7 +14,7 @@
 
                     <div class="md:col-span-2">
                         <label class="{{ $ui['label'] }}" for="dominio">Domínio</label>
-                        <input id="dominio" name="dominio" type="text" class="{{ $ui['input'] }}" value="{{$domain->name ?? old('domain')}}"  />
+                        <input id="dominio" name="dominio" type="text" class="{{ $ui['input'] }}" value="{{$domain->name ?? old('domains')}}"  />
                         @error('dominio')
                             <span class="{{$ui['errorText']}}">{{$message}}</span>
                         @enderror

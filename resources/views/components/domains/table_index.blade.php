@@ -252,7 +252,6 @@ new class extends Component {
                                href="{{ route('domains.deleteConfirmation', $domain) }}"  title="Deletar">
                                 <x-lucide-trash class="w-4 h-4  "/>
                             </a>
-
                             @endcan
                         </div>
                     </td>
