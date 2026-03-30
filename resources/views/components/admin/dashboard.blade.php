@@ -65,7 +65,9 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
         </section>
+
 
         <section class="{{ $ui['card'] }}">
             <div class="{{ $ui['cardHeader'] }}">

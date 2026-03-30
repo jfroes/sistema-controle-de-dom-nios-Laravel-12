@@ -54,7 +54,7 @@ new class extends Component {
             $query->where('status', DomainStatusEnum::BLOCKED->value);
         }
 
-        $domains = $query->paginate(10);
+        $domains = $query->paginate(8);
 
         return view('components.client.⚡client_domains_table', [
             'domains' => $domains,

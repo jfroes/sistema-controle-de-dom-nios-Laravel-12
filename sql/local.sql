@@ -29,7 +29,7 @@ CREATE TABLE `clients` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,9 +38,11 @@ CREATE TABLE `clients` (
 
 LOCK TABLES `clients` WRITE;
 /*!40000 ALTER TABLE `clients` DISABLE KEYS */;
-INSERT INTO `clients` VALUES (1,'Empresa Alpha',NULL,NULL,NULL);
+INSERT INTO `clients` VALUES (1,'Empresa Alpha',NULL,'2026-03-30 01:23:17','2026-03-30 01:23:17');
 INSERT INTO `clients` VALUES (2,'Startup Beta',NULL,NULL,NULL);
 INSERT INTO `clients` VALUES (3,'Cliente Gamma',NULL,NULL,NULL);
+INSERT INTO `clients` VALUES (4,'Cliente sem  teste','2026-03-29 20:20:06','2026-03-30 01:38:04',NULL);
+INSERT INTO `clients` VALUES (5,'cliente cadastro front teste','2026-03-29 23:51:46','2026-03-30 01:25:43','2026-03-30 01:25:43');
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +70,7 @@ CREATE TABLE `domains` (
   KEY `domains_registrar_account_id_foreign` (`registrar_account_id`),
   CONSTRAINT `domains_client_id_foreign` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE CASCADE,
   CONSTRAINT `domains_registrar_account_id_foreign` FOREIGN KEY (`registrar_account_id`) REFERENCES `registrar_accounts` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,6 +97,7 @@ INSERT INTO `domains` VALUES (18,'clientegamma.com.br',3,3,'Hostinger','desenvol
 INSERT INTO `domains` VALUES (19,'dominio4.com.br',3,3,'Hostinger','desenvolvimento','2026-03-31','ativo','2026-03-26 20:55:50',NULL,NULL);
 INSERT INTO `domains` VALUES (20,'https://dominioteste.com.br',1,3,'Hostinger','desenvolvimento','2026-06-28','ativo','2026-03-28 23:50:30','2026-03-28 23:50:30',NULL);
 INSERT INTO `domains` VALUES (21,'https://dominio2teste.com.br',2,1,NULL,NULL,'2026-03-31','ativo','2026-03-28 23:55:18','2026-03-28 23:55:18',NULL);
+INSERT INTO `domains` VALUES (22,'https://teste.com.br',5,1,NULL,NULL,'2026-07-28','ativo','2026-03-29 23:52:26','2026-03-29 23:52:26',NULL);
 /*!40000 ALTER TABLE `domains` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,7 +230,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'John Doe','admin@email.com','$2y$12$FG3g2rNNyinxNWwgEswaiOXbr/UmqTtkuBtBRVzyo1o8TfPGZ/7ia','admin',NULL,0,NULL,'2026-03-26 13:22:05',NULL,NULL,'ativo','2026-03-26 16:22:05','2026-03-26 16:22:05',NULL);
+INSERT INTO `users` VALUES (1,'John Doe','admin@email.com','$2y$12$FG3g2rNNyinxNWwgEswaiOXbr/UmqTtkuBtBRVzyo1o8TfPGZ/7ia','admin',NULL,0,NULL,'2026-03-26 13:22:05',NULL,NULL,'ativo','2026-03-26 16:22:05','2026-03-29 22:30:34',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -240,4 +243,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-29 16:30:08
+-- Dump completed on 2026-03-29 19:55:51

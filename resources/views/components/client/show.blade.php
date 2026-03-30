@@ -5,7 +5,7 @@
                 <h1 class="{{ $ui['title'] }}">Cliente: {{$client->name}}</h1>
                 <p class="{{ $ui['subtitle'] }} mt-1">Visão consolidada de dados e domínios do cliente.</p>
             </div>
-            <a href="{{ url('admin/clientes/1/edit') }}" class="{{ $ui['btnSecondary'] }}">Editar cliente</a>
+            <a href="{{ route('clients.edit', $client) }}" class="{{ $ui['btnSecondary'] }}">Editar cliente</a>
         </header>
 
         <section class="grid md:grid-cols-3 gap-4">
