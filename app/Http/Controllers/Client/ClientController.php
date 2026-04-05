@@ -92,7 +92,7 @@ class ClientController extends Controller
             'confirmation_text.string' => 'A confirmação deve ser uma string',
             'confirmation_text.min' => 'A confirmação deve ter pelo menos :min caracteres',
             'confirmation_text.max' => 'A confirmação deve ter no máximo :max caracteres',
-            'confirmation_text.in' => 'A confirmação deve ser igual ao nome do domínio',
+            'confirmation_text.in' => 'A confirmação deve ser igual ao nome do cliente',
         ]);
 
         $client->delete();

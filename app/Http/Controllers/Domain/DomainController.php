@@ -6,7 +6,6 @@ use App\Enums\DomainStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\Domain;
-use App\Models\Registrar;
 use App\Models\RegistrarAccount;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

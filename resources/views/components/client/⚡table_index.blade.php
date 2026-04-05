@@ -12,7 +12,6 @@ new class extends Component {
 
     public $search = '';
     public $site_filtro = '';
-    public $filter = 'all';
 
 
     protected $paginationTheme = 'tailwind';
@@ -55,7 +54,7 @@ new class extends Component {
             <div class="grid md:grid-cols-3 gap-4">
                 <div class="md:col-span-2">
                     <label for="search" class="{{ $ui['label'] }}">Pesquisar
-                        <div wire:loading class="text-xs italic text-slate-500 ml-2">Carregando...</div>
+                        <div wire:loading class="text-xs italic text-slate-500 ml-2"><x-lucide-refresh-cw class="{{$ui['icon-size']}} animate-spin"/></div>
                     </label>
                     <input wire:model.live="search" id="search" type="search" class="{{ $ui['input'] }}"
                            placeholder="Buscar por nome"/>
@@ -93,19 +92,19 @@ new class extends Component {
                             <div class="flex flex-wrap gap-3">
                                 <a class="text-slate-700 hover:text-slate-500" href="{{route('clients.show', $client)}}"
                                    title="Ver detalhes">
-                                    <x-lucide-file-search-corner class="w-4 h-4 "/>
+                                    <x-lucide-file-search-corner class="{{ $ui['icon-size'] }}"/>
 
                                 </a>
                                 <a class="text-slate-700 hover:text-slate-500" href="{{route('clients.edit', $client)}}"
                                    title="Editar">
-                                    <x-lucide-edit class="w-4 h-4"/>
+                                    <x-lucide-edit class="{{ $ui['icon-size'] }}"/>
 
 
                                 </a>
                                 @can('user_is_admin')
                                     <a class="text-red-700 hover:text-red-500"
                                        href="{{route('clients.confirm_delete', $client)}}" title="Deletar">
-                                        <x-lucide-trash class="w-4 h-4  "/>
+                                        <x-lucide-trash class="{{ $ui['icon-size'] }}  "/>
                                     </a>
                                 @endcan
                             </div>

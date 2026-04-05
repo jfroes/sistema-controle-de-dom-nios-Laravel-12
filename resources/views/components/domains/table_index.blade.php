@@ -1,11 +1,13 @@
 <?php
 
+use App\Enums\DomainStatusEnum;
 use Illuminate\Support\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Domain;
 use App\Models\Client;
 use App\Models\Registrar;
+use App\Models\RegistrarAccount;
 
 new class extends Component {
 
@@ -18,10 +20,17 @@ new class extends Component {
     public $status = '';
     public $expiresUntil = '';
     public $filter = 'all';
+    public $statuses = [];
+
 
     public $from = null;
 
     protected $paginationTheme = 'tailwind';
+
+    public function mount()
+    {
+        $this->statuses = collect(DomainStatusEnum::cases())->mapWithKeys(fn($status) => [$status->value => $status->label()])->toArray();
+    }
 
 
     public function updated($property)
@@ -36,11 +45,10 @@ new class extends Component {
         $this->filter = $filter;
 
 
-
         switch ($filter) {
             case 'expires_soon':
                 $this->from = now()->toDateString();
-                $this->expiresUntil  = now()->addDays(15)->toDateString();
+                $this->expiresUntil = now()->addDays(15)->toDateString();
 
                 break;
             case 'expired':
@@ -106,13 +114,15 @@ new class extends Component {
             $query->where('status', $this->status);
         }
 
-        $domains = $query->orderBy('expires_at')->paginate(10);
+        $domains = $query->orderBy('expires_at')->paginate(8);
         $clients = Client::orderBy('name')->get();
         $registrars = Registrar::orderBy('name')->get();
+        $registrarAccounts = RegistrarAccount::all();
 
-        return view('components.domains.table_index', compact('domains', 'clients', 'registrars'));
+        $statuses = $this->statuses;
+
+        return view('components.domains.table_index', compact('domains', 'clients', 'registrars', 'registrarAccounts', 'statuses' ));
     }
-
 
 
 };
@@ -120,15 +130,26 @@ new class extends Component {
 
 ?>
 
-<div>
+<div class=" space-y-6">
     <section class="{{ $ui['card'] }}">
         <div class="{{ $ui['cardBody'] }} space-y-4">
             <div class="flex flex-wrap gap-2">
-                <button wire:click="filtrar('all')" class="{{ $filter === 'all' ? $ui['filterBtnActive'] : $ui['filterBtn'] }}" type="button">Todos</button>
-                <button wire:click="filtrar('within_deadline')" class="{{ $filter === 'within_deadline' ? $ui['filterBtnActive'] : $ui['filterBtn'] }}" type="button">Dentro do prazo</button>
-                <button wire:click="filtrar('expires_soon')" class="{{ $filter === 'expires_soon' ? $ui['filterBtnActive'] : $ui['filterBtn'] }}" type="button">Expira em breve</button>
-                <button wire:click="filtrar('expired')" class="{{ $filter === 'expired' ? $ui['filterBtnActive'] : $ui['filterBtn'] }}" type="button">Expirados</button>
-                <div wire:loading >Carregando...</div>
+                <button wire:click="filtrar('all')"
+                        class="{{ $filter === 'all' ? $ui['filterBtnActive'] : $ui['filterBtn'] }}" type="button">Todos
+                </button>
+                <button wire:click="filtrar('within_deadline')"
+                        class="{{ $filter === 'within_deadline' ? $ui['filterBtnActive'] : $ui['filterBtn'] }}"
+                        type="button">Dentro do prazo
+                </button>
+                <button wire:click="filtrar('expires_soon')"
+                        class="{{ $filter === 'expires_soon' ? $ui['filterBtnActive'] : $ui['filterBtn'] }}"
+                        type="button">Expira em breve
+                </button>
+                <button wire:click="filtrar('expired')"
+                        class="{{ $filter === 'expired' ? $ui['filterBtnActive'] : $ui['filterBtn'] }}" type="button">
+                    Expirados
+                </button>
+                <div wire:loading><x-lucide-refresh-cw class="{{$ui['icon-size']}} animate-spin"/></div>
 
             </div>
 
@@ -148,8 +169,9 @@ new class extends Component {
                     <label for="cliente_filtro" class="{{ $ui['label'] }}">Cliente</label>
                     <select wire:model.live="clientId" id="cliente_filtro" class="{{ $ui['input'] }}">
                         <option value="">Todos</option>
-                        <option value="1">Cliente A</option>
-                        <option value="2">Cliente B</option>
+                        @foreach($clients as $client)
+                            <option value="{{$client->id}}">{{$client->name}}</option>
+                        @endforeach
                     </select>
                 </div>
 
@@ -162,20 +184,19 @@ new class extends Component {
                     <label for="status_filtro" class="{{ $ui['label'] }}">Status</label>
                     <select wire:model.live="status" id="status_filtro" class="{{ $ui['input'] }}">
                         <option value="">Todos</option>
-                        <option value="ativo">Ativo</option>
-                        <option value="inativo">Inativo</option>
-                        <option value="bloqueado">Bloqueado</option>
-                        <option value="expirado">Expirado</option>
+                        @foreach($statuses as $value => $label)
+                            <option value="{{$value}}">{{$label}}</option>
+                        @endforeach
                     </select>
                 </div>
 
                 <div class="">
                     <label for="registrador_filtro" class="{{ $ui['label'] }}">Registrador</label>
                     <select wire:model.live="registrarId" id="registrador_filtro" class="{{ $ui['input'] }}">
-                        <option value="">Todas</option>
-                        <option value="1">Godaddy</option>
-                        <option value="2">NameCheap</option>
-                        <option value="3">Registro.br</option>
+                        <option value="">Todos</option>
+                        @foreach($registrars as $registrar)
+                            <option value="{{$registrar->id}}">{{$registrar->name}}</option>
+                        @endforeach
                     </select>
 
                 </div>
@@ -185,8 +206,10 @@ new class extends Component {
                     <select wire:model.live="registrarAccountId" id="conta_registrador_filtro"
                             class="{{ $ui['input'] }}">
                         <option value="">Todas</option>
-                        <option value="1">RegistroBR - Principal</option>
-                        <option value="2">Cloudflare - Time Infra</option>
+                        @foreach($registrarAccounts as $account)
+                            <option value="{{$account->id}}">{{$account->label}} ({{$account->registrar->name}})
+                            </option>
+                        @endforeach
                     </select>
 
                 </div>
@@ -211,52 +234,55 @@ new class extends Component {
             <tbody>
 
             @if($domains->count() > 0)
-            @foreach($domains as $domain)
-                <tr>
-                    <td class="{{ $ui['td'] }}">{{$domain->name}}</td>
-                    <td class="{{ $ui['td'] }}">{{$domain->client->name }}</td>
-                    <td class="{{ $ui['td'] }}">{{$domain->registrarAccount->registrar->name}}</td>
-                    <td class="{{ $ui['td'] }}">{{$domain->registrarAccount->label}}</td>
-                    <td class="{{ $ui['td'] }}">{{$domain->expires_at->format('d/m/Y') }}</td>
+                @foreach($domains as $domain)
+                    <tr>
+                        <td class="{{ $ui['td'] }}">{{$domain->name}}</td>
+                        <td class="{{ $ui['td'] }}">{{$domain->client->name }}</td>
+                        <td class="{{ $ui['td'] }}">{{$domain->registrarAccount->registrar->name}}</td>
+                        <td class="{{ $ui['td'] }}">{{$domain->registrarAccount->label}}</td>
+                        <td class="{{ $ui['td'] }}">{{$domain->expires_at->format('d/m/Y') }}</td>
 
-                    @php
-                        $dataFim = Carbon::parse($domain->expires_at->startOfDay());
-                        $diferenca = Carbon::now()->startOfDay()->diffInDays($dataFim, false);
-                    @endphp
+                        @php
+                            $dataFim = Carbon::parse($domain->expires_at->startOfDay());
+                            $diferenca = Carbon::now()->startOfDay()->diffInDays($dataFim, false);
+                        @endphp
 
-                    <td class="{{ $ui['td'] }}">
-                        @if($diferenca > 0 && $diferenca <= 15)
-                            <span class="{{$ui['badgeWarning']}}">Expira em {{$diferenca}} dias</span>
-                        @elseif($diferenca < 0)
-                            <span class="{{$ui['badgeDanger']}}">Expirado há {{abs($diferenca)}} dias</span>
-                        @else
-                            <span class="{{$ui['badgeOk']}}">Dentro do prazo</span>
-                        @endif
-                    </td>
-                    <td class="{{ $ui['td'] }}">
-                        <span class=" text-xs font-medium text-{{$domain->status->color()}}-600">{{$domain->status->label()}}</span>
-                    </td>
-                    <td class="{{ $ui['td'] }}">
-                        <div class="flex flex-wrap gap-3">
-                            <a class="text-slate-700 hover:text-slate-500" href="{{ route('domains.show', $domain) }}" title="Ver detalhes">
-                                <x-lucide-file-search-corner class="w-4 h-4 "/>
+                        <td class="{{ $ui['td'] }}">
+                            @if($diferenca > 0 && $diferenca <= 15)
+                                <span class="{{$ui['badgeWarning']}}">Expira em {{$diferenca}} dias</span>
+                            @elseif($diferenca < 0)
+                                <span class="{{$ui['badgeDanger']}}">Expirado há {{abs($diferenca)}} dias</span>
+                            @else
+                                <span class="{{$ui['badgeOk']}}">Dentro do prazo</span>
+                            @endif
+                        </td>
+                        <td class="{{ $ui['td'] }}">
+                            <span
+                                class=" text-xs font-medium text-{{$domain->status->color()}}-600">{{$domain->status->label()}}</span>
+                        </td>
+                        <td class="{{ $ui['td'] }}">
+                            <div class="flex flex-wrap gap-3">
+                                <a class="text-slate-700 hover:text-slate-500"
+                                   href="{{ route('domains.show', $domain) }}" title="Ver detalhes">
+                                    <x-lucide-file-search-corner class="{{ $ui['icon-size'] }} "/>
 
-                            </a>
-                            <a class="text-slate-700 hover:text-slate-500" href="{{ route('domains.edit', $domain) }}"  title="Editar">
-                                <x-lucide-edit class="w-4 h-4 "/>
+                                </a>
+                                <a class="text-slate-700 hover:text-slate-500"
+                                   href="{{ route('domains.edit', $domain) }}" title="Editar">
+                                    <x-lucide-edit class="{{ $ui['icon-size'] }} "/>
 
 
-                            </a>
-                            @can('user_is_admin')
-                            <a class="text-red-700 hover:text-red-500"
-                               href="{{ route('domains.deleteConfirmation', $domain) }}"  title="Deletar">
-                                <x-lucide-trash class="w-4 h-4  "/>
-                            </a>
-                            @endcan
-                        </div>
-                    </td>
-                </tr>
-            @endforeach
+                                </a>
+                                @can('user_is_admin')
+                                    <a class="text-red-700 hover:text-red-500"
+                                       href="{{ route('domains.deleteConfirmation', $domain) }}" title="Deletar">
+                                        <x-lucide-trash class="{{ $ui['icon-size'] }}  "/>
+                                    </a>
+                                @endcan
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
             @else
                 <tr>
                     <td colspan="8" class="{{ $ui['td'] }} text-center py-6">
