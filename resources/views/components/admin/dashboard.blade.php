@@ -74,28 +74,33 @@
                 <h2 class="text-lg font-semibold text-slate-900">Próximos vencimentos</h2>
             </div>
             <div class="{{ $ui['cardBody'] }}">
-                <div class="{{ $ui['tableWrap'] }}">
-                    <table class="{{ $ui['table'] }}">
-                        <thead>
-                        <tr>
-                            <th class="{{ $ui['th'] }}">Domínio</th>
-                            <th class="{{ $ui['th'] }}">Cliente</th>
-                            <th class="{{ $ui['th'] }}">Expiração</th>
-                            <th class="{{ $ui['th'] }}">Status</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($expiresIn30days as $domain)
+                @if( $expiresIn30days->count() == 0)
+                    <p class="text-sm text-slate-500 italic">Nenhum domínio expirando nos próximos 30 dias.</p>
+                @else
+                    <div class="{{ $ui['tableWrap'] }}">
+                        <table class="{{ $ui['table'] }}">
+                            <thead>
                             <tr>
-                                <td class="{{ $ui['td'] }}">{{$domain->name}}</td>
-                                <td class="{{ $ui['td'] }}">{{$domain->client->name }}</td>
-                                <td class="{{ $ui['td'] }}">{{$domain->expires_at->format('d/m/Y') }}</td>
-                                <td class="{{ $ui['td'] }}"><span class="{{ $ui['badgeWarning'] }}">Vence em breve</span></td>
+                                <th class="{{ $ui['th'] }}">Domínio</th>
+                                <th class="{{ $ui['th'] }}">Cliente</th>
+                                <th class="{{ $ui['th'] }}">Expiração</th>
+                                <th class="{{ $ui['th'] }}">Status</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                            @foreach($expiresIn30days as $domain)
+                                <tr>
+                                    <td class="{{ $ui['td'] }}">{{$domain->name}}</td>
+                                    <td class="{{ $ui['td'] }}">{{$domain->client->name }}</td>
+                                    <td class="{{ $ui['td'] }}">{{$domain->expires_at->format('d/m/Y') }}</td>
+                                    <td class="{{ $ui['td'] }}"><span class="{{ $ui['badgeWarning'] }}">Vence em breve</span></td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                @endif
             </div>
         </section>
     </div>

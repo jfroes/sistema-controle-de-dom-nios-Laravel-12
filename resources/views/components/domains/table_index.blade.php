@@ -149,7 +149,7 @@ new class extends Component {
                         class="{{ $filter === 'expired' ? $ui['filterBtnActive'] : $ui['filterBtn'] }}" type="button">
                     Expirados
                 </button>
-                <div wire:loading>Carregando...</div>
+                <div wire:loading><x-lucide-refresh-cw class="{{$ui['icon-size']}} animate-spin"/></div>
 
             </div>
 
@@ -264,19 +264,19 @@ new class extends Component {
                             <div class="flex flex-wrap gap-3">
                                 <a class="text-slate-700 hover:text-slate-500"
                                    href="{{ route('domains.show', $domain) }}" title="Ver detalhes">
-                                    <x-lucide-file-search-corner class="w-4 h-4 "/>
+                                    <x-lucide-file-search-corner class="{{ $ui['icon-size'] }} "/>
 
                                 </a>
                                 <a class="text-slate-700 hover:text-slate-500"
                                    href="{{ route('domains.edit', $domain) }}" title="Editar">
-                                    <x-lucide-edit class="w-4 h-4 "/>
+                                    <x-lucide-edit class="{{ $ui['icon-size'] }} "/>
 
 
                                 </a>
                                 @can('user_is_admin')
                                     <a class="text-red-700 hover:text-red-500"
                                        href="{{ route('domains.deleteConfirmation', $domain) }}" title="Deletar">
-                                        <x-lucide-trash class="w-4 h-4  "/>
+                                        <x-lucide-trash class="{{ $ui['icon-size'] }}  "/>
                                     </a>
                                 @endcan
                             </div>

@@ -70,7 +70,7 @@ CREATE TABLE `domains` (
   KEY `domains_registrar_account_id_foreign` (`registrar_account_id`),
   CONSTRAINT `domains_client_id_foreign` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE CASCADE,
   CONSTRAINT `domains_registrar_account_id_foreign` FOREIGN KEY (`registrar_account_id`) REFERENCES `registrar_accounts` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,6 +98,11 @@ INSERT INTO `domains` VALUES (19,'dominio4.com.br',3,3,'Hostinger','desenvolvime
 INSERT INTO `domains` VALUES (20,'https://dominioteste.com.br',1,3,'Hostinger','desenvolvimento','2026-06-28','ativo','2026-03-28 23:50:30','2026-03-28 23:50:30',NULL);
 INSERT INTO `domains` VALUES (21,'https://dominio2teste.com.br',2,1,NULL,NULL,'2026-03-31','ativo','2026-03-28 23:55:18','2026-03-28 23:55:18',NULL);
 INSERT INTO `domains` VALUES (22,'https://teste.com.br',5,1,NULL,NULL,'2026-07-28','ativo','2026-03-29 23:52:26','2026-03-29 23:52:26',NULL);
+INSERT INTO `domains` VALUES (23,'https://teste2.com.br',2,1,NULL,NULL,'2026-03-31','ativo','2026-03-30 16:55:19','2026-03-30 16:55:19',NULL);
+INSERT INTO `domains` VALUES (24,'https://dominio4teste.com.br',3,1,NULL,NULL,'2026-03-31','ativo','2026-03-30 16:57:11','2026-03-30 16:57:11',NULL);
+INSERT INTO `domains` VALUES (25,'https://dominio5teste.com.br',3,1,NULL,NULL,'2026-03-31','ativo','2026-03-30 16:57:27','2026-03-30 16:57:27',NULL);
+INSERT INTO `domains` VALUES (26,'https://dominio6teste.com.br',3,1,NULL,NULL,'2026-03-31','ativo','2026-03-30 16:58:05','2026-03-30 16:58:05',NULL);
+INSERT INTO `domains` VALUES (27,'https://dominio7teste.com.br',3,1,NULL,NULL,'2026-03-31','ativo','2026-03-30 16:58:38','2026-03-30 16:58:38',NULL);
 /*!40000 ALTER TABLE `domains` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +186,7 @@ CREATE TABLE `registrars` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -193,6 +198,7 @@ LOCK TABLES `registrars` WRITE;
 INSERT INTO `registrars` VALUES (1,'GoDaddy','https://godaddy.com',NULL,NULL,NULL);
 INSERT INTO `registrars` VALUES (2,'Namecheap','https://namecheap.com',NULL,NULL,NULL);
 INSERT INTO `registrars` VALUES (3,'Registro.br','https://registro.br',NULL,NULL,NULL);
+INSERT INTO `registrars` VALUES (4,'Regitrador teste',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `registrars` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -243,4 +249,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-29 19:55:51
+-- Dump completed on 2026-03-31 10:05:17
