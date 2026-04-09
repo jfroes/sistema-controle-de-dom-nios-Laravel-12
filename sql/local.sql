@@ -41,7 +41,7 @@ LOCK TABLES `clients` WRITE;
 INSERT INTO `clients` VALUES (1,'Empresa Alpha',NULL,'2026-03-30 01:23:17','2026-03-30 01:23:17');
 INSERT INTO `clients` VALUES (2,'Startup Beta',NULL,NULL,NULL);
 INSERT INTO `clients` VALUES (3,'Cliente Gamma',NULL,NULL,NULL);
-INSERT INTO `clients` VALUES (4,'Cliente sem  teste','2026-03-29 20:20:06','2026-03-30 01:38:04',NULL);
+INSERT INTO `clients` VALUES (4,'Cliente sem  teste','2026-03-29 20:20:06','2026-04-05 21:00:34','2026-04-05 21:00:34');
 INSERT INTO `clients` VALUES (5,'cliente cadastro front teste','2026-03-29 23:51:46','2026-03-30 01:25:43','2026-03-30 01:25:43');
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -70,7 +70,7 @@ CREATE TABLE `domains` (
   KEY `domains_registrar_account_id_foreign` (`registrar_account_id`),
   CONSTRAINT `domains_client_id_foreign` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE CASCADE,
   CONSTRAINT `domains_registrar_account_id_foreign` FOREIGN KEY (`registrar_account_id`) REFERENCES `registrar_accounts` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,6 +103,7 @@ INSERT INTO `domains` VALUES (24,'https://dominio4teste.com.br',3,1,NULL,NULL,'2
 INSERT INTO `domains` VALUES (25,'https://dominio5teste.com.br',3,1,NULL,NULL,'2026-03-31','ativo','2026-03-30 16:57:27','2026-03-30 16:57:27',NULL);
 INSERT INTO `domains` VALUES (26,'https://dominio6teste.com.br',3,1,NULL,NULL,'2026-03-31','ativo','2026-03-30 16:58:05','2026-03-30 16:58:05',NULL);
 INSERT INTO `domains` VALUES (27,'https://dominio7teste.com.br',3,1,NULL,NULL,'2026-03-31','ativo','2026-03-30 16:58:38','2026-03-30 16:58:38',NULL);
+INSERT INTO `domains` VALUES (28,'https://clientegamma32.com.br',2,4,NULL,NULL,'2026-07-22','ativo','2026-04-07 00:31:46','2026-04-07 00:31:46',NULL);
 /*!40000 ALTER TABLE `domains` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -156,7 +157,7 @@ CREATE TABLE `registrar_accounts` (
   PRIMARY KEY (`id`),
   KEY `registrar_accounts_registrar_id_foreign` (`registrar_id`),
   CONSTRAINT `registrar_accounts_registrar_id_foreign` FOREIGN KEY (`registrar_id`) REFERENCES `registrars` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -168,6 +169,7 @@ LOCK TABLES `registrar_accounts` WRITE;
 INSERT INTO `registrar_accounts` VALUES (1,1,'Conta Principal GoDaddy','admin@godaddy.com','Conta principal da empresa',NULL,NULL,NULL);
 INSERT INTO `registrar_accounts` VALUES (2,2,'Conta Namecheap Dev','dev@namecheap.com',NULL,NULL,NULL,NULL);
 INSERT INTO `registrar_accounts` VALUES (3,3,'Conta Registro.br','contato@empresa.com','Domínios .br',NULL,NULL,NULL);
+INSERT INTO `registrar_accounts` VALUES (4,2,'Conta Namecheap Dev 2','josepaulo.froes@gmail.com','notas de repudio','2026-04-07 00:31:10','2026-04-07 00:31:10',NULL);
 /*!40000 ALTER TABLE `registrar_accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,7 +188,7 @@ CREATE TABLE `registrars` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -195,10 +197,12 @@ CREATE TABLE `registrars` (
 
 LOCK TABLES `registrars` WRITE;
 /*!40000 ALTER TABLE `registrars` DISABLE KEYS */;
-INSERT INTO `registrars` VALUES (1,'GoDaddy','https://godaddy.com',NULL,NULL,NULL);
-INSERT INTO `registrars` VALUES (2,'Namecheap','https://namecheap.com',NULL,NULL,NULL);
+INSERT INTO `registrars` VALUES (1,'GoDaddy','https://godaddy.com',NULL,'2026-04-05 21:37:28',NULL);
+INSERT INTO `registrars` VALUES (2,'Namecheap','https://namecheap.com',NULL,'2026-04-05 22:03:44',NULL);
 INSERT INTO `registrars` VALUES (3,'Registro.br','https://registro.br',NULL,NULL,NULL);
 INSERT INTO `registrars` VALUES (4,'Regitrador teste',NULL,NULL,NULL,NULL);
+INSERT INTO `registrars` VALUES (5,'registrador teste front c/ site','https://registradormil.com','2026-04-05 21:14:15','2026-04-05 21:31:18',NULL);
+INSERT INTO `registrars` VALUES (6,'RegistroBR - pigolets','https://registro.br','2026-04-05 21:14:39','2026-04-05 22:02:52','2026-04-05 22:02:52');
 /*!40000 ALTER TABLE `registrars` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -249,4 +253,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-31 10:05:17
+-- Dump completed on 2026-04-07 13:37:27

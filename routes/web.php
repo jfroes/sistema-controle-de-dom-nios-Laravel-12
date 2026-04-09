@@ -24,6 +24,7 @@ Route::middleware(['auth', 'check_password_changed', 'check_user_status'])->grou
     require __DIR__ . '/domain.php';
     require __DIR__ . '/client.php';
     require __DIR__ . '/registrar.php';
+    require __DIR__ . '/registrar_accounts.php';
 
 });
 
