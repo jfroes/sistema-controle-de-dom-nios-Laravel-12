@@ -21,6 +21,10 @@
             <x-lucide-book-marked class="{{ $ui['icon-size'] }}" />Registradores
         </a>
 
+        <a href="{{route('registrar_accounts.index')}}" class="{{ request()->is('*registrar_accounts*') ? $ui['sidebarItemActive'] : $ui['sidebarItem'] }}">
+            <x-lucide-cuboid class="{{ $ui['icon-size'] }}" />Contas de Registradores
+        </a>
+
         <a href="#" class="{{ request()->is('*configuracoes*') ? $ui['sidebarItemActive'] : $ui['sidebarItem'] }}">
             <x-lucide-settings-2 class="{{ $ui['icon-size'] }}" />Configurações
         </a>

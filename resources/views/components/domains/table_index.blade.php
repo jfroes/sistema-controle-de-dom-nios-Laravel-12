@@ -71,7 +71,8 @@ new class extends Component {
     {
         $query = Domain::query()
             ->with(['client', 'registrarAccount.registrar'])
-            ->whereHas('client', fn($q) => $q->whereNull('deleted_at'));
+            ->whereHas('client', fn($q) => $q->whereNull('deleted_at'))
+            ->whereHas('registrarAccount.registrar', fn($q) => $q->whereNull('deleted_at'));
 
         if ($this->search) {
             $query->where('name', 'like', '%' . $this->search . '%')
